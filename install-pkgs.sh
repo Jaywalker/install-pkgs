@@ -24,11 +24,11 @@ repodir="$HOME/.local/src"
 
 #Detect system and setup the installpkg function accordingly
 if type xbps-install >/dev/null 2>&1; then
-	installpkg(){ xbps-install -y "$1" >/dev/null 2>&1 ;}
+	installpkg(){ sudo xbps-install -y "$1" >/dev/null 2>&1 ;}
 	grepseq="\"^pip,\|^git,\|^void,\|^,\""
 elif type pacman >/dev/null 2>&1; then
 	distro="arch"
-	installpkg(){ pacman --noconfirm --needed -S "$1" >/dev/null 2>&1 ;}
+	installpkg(){ sudo pacman --noconfirm --needed -S "$1" >/dev/null 2>&1 ;}
 	grepseq="\"^pip,\|^git,\|^AUR,\|^pacman,\|^,\""
 elif type pkg >/dev/null 2>&1; then
 	distro="bsd"
@@ -58,7 +58,7 @@ elif type apt >/dev/null 2>&1; then
 			grepseq="\"^git,\|^iOS,\|^,\""
 			;;
 	esac
-	installpkg(){ apt-get install -y "$1" >/dev/null 2>&1 ;}                           
+	installpkg(){ sudo apt-get install -y "$1" >/dev/null 2>&1 ;}
 else
 	echo "Unsupported system! No known package manager. Failing."
 	exit 1
