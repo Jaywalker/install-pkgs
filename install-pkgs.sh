@@ -150,7 +150,7 @@ macappinstall() {
 }
 
 installationloop() {
-	([ -f "$progsfile" ] && cp "$progsfile" /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' | eval grep "$grepseq" > /tmp/progs.csv
+	([ -f "$progsfile" ] && sed '/^#/d' "$progsfile"| eval grep "$grepseq" > /tmp/progs.csv) || curl -Ls "$progsfile" | sed '/^#/d' | eval grep "$grepseq" > /tmp/progs.csv
 	total=$(wc -l < /tmp/progs.csv)
 	[ "$distro" = arch ] && { \
 		aurinstalled=$(pacman -Qqm)
